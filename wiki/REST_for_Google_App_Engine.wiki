@@ -12,3 +12,19 @@ The two wrapper classes, Connection and GAE_Connection provide the same API, but
 = Details =
 
 Simply, use Connection when in a normal environment, and use GAE_Connection when in the Google App engine environment. Once I work out a suitable technique to recognise the given environment, I hope this to be automatic.
+
+== Example code ==
+
+(From within a deployed google app engine app, hooking into Twitter.)
+{{{
+from gae_restful_lib import GAE_Connection as Connection
+
+conn = Connection('http://twitter.com/statuses', username='twitterusername', password='pass')
+
+# No Auth needed
+public_timeline_rss = conn.request_get('/public_timeline.rss')
+
+# Basic Auth needed, although Digest is handled in the same way.
+friends_timeline = conn.request_get('/friends_timeline.xml')
+
+}}}
